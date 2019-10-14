@@ -1,28 +1,27 @@
-os: linux
-sudo: required
-language:
-- minimal
-services:
-- docker
+sudo: false
 
-jobs:
-  include:
-  - name: "checks"
-    script:
-    - docker run -v `pwd`:`pwd` -w `pwd` --cap-add=SYS_PTRACE -t rusdevops/bootstrap-cpp scripts/checks.sh
-  - name: "tests"
-    script:
-    - docker run -v `pwd`:`pwd` -w `pwd` -t rusdevops/bootstrap-cpp scripts/tests.sh
-  - name: "quality"
-    script:
-    - ./scripts/genenv.sh
-    - docker run --env-file .env -v `pwd`:`pwd` -w `pwd` -t rusdevops/bootstrap-cpp scripts/coverage.sh
-    # The bot has gone...
-    # - docker run --env-file .env -v `pwd`:`pwd` -w `pwd` -t rusdevops/bootstrap-cpp scripts/duplication.sh
+language: cpp
 
-notifications:
-    email: false
+compiler:
+  -gcc
 
-branches:
-  except:
-  - master
+before_install:
+  - pip install --user cpp-coveralls
+
+install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-8" CC="gcc-8"; fi
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
+
+script:
+  - ctest -V
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-8
+      - g++-8
