@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nothingholy/lab-03-shared-ptr.svg?branch=master)](https://travis-ci.org/nothingholy/lab-03-shared-ptr) [![forthebadge](https://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](https://forthebadge.com) ![nothingholy](https://img.shields.io/badge/nothing-holy-red) ![GitHub repo size](https://img.shields.io/github/repo-size/nothingholy/lab-03-shared-ptr)
+
 # Лабораторная работа №3
 
 ### Задание
